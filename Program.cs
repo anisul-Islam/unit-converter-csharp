@@ -1,4 +1,4 @@
-﻿string inputValue;
+﻿string? inputValue;
 double value, convertedValue;
 
 Console.WriteLine($"Welcome to the unit converter App");
@@ -37,6 +37,22 @@ inputValue = Console.ReadLine();
 value = Convert.ToDouble(inputValue);
 convertedValue = (value - 32) / 1.8;
 Console.WriteLine($"{value} Fahrenheit = {convertedValue:F2} Celsius");
+
+// kilograms to pounds
+Console.WriteLine($"\n\n5. kilograms to pounds");
+Console.Write($"Enter the value you want to convert: ");
+inputValue = Console.ReadLine();
+value = Convert.ToDouble(inputValue);
+convertedValue = value * 2.20462; // 1 kilogram = 2.20462 pounds
+Console.WriteLine($"{value} kilograms = {convertedValue:F2} Pounds");
+
+// Pounds to kilograms
+Console.WriteLine($"\n\n6. Pounds to kilograms");
+Console.Write($"Enter the value you want to convert: ");
+inputValue = Console.ReadLine();
+value = Convert.ToDouble(inputValue);
+convertedValue = value / 2.20462; // 1 Pound = 0.453592 kilograms
+Console.WriteLine($"{value} Pounds = {convertedValue:F2} kilograms");
 
 
 
