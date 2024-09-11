@@ -29,24 +29,30 @@
   {
     Console.Write($"Enter the value you want to convert: ");
     string? inputValue = Console.ReadLine();
-    if (string.IsNullOrWhiteSpace(inputValue))
+    try
     {
-      Console.WriteLine($"Input can not be empty. Please enter a valid numeric value");
-      convertedValidValue = 0;
-      return false;
-    }
+      if (string.IsNullOrWhiteSpace(inputValue))
+      {
+        throw new ArgumentException($"Input can not be empty.");
+      }
 
-    if (!double.TryParse(inputValue, out convertedValidValue) || convertedValidValue < 0)
-    {
-      return false;
-    }
+      if (!double.TryParse(inputValue, out convertedValidValue) || convertedValidValue < 0)
+      {
+        throw new ArgumentException($"Only Positive numeric valus are allowed.");
+      }
 
-    if (convertedValidValue > double.MaxValue)
-    {
-      Console.WriteLine($"Warning: The value is too large and may not realistic.");
-      return false;
+      if (convertedValidValue > double.MaxValue)
+      {
+        throw new ArgumentOutOfRangeException($"Warning: The value is too large and may not realistic.");
+      }
+      return true;
     }
-    return true;
+    catch (ArgumentException ex)
+    {
+      Console.WriteLine($"Error : {ex.Message}");
+    }
+    convertedValidValue = 0;
+    return false;
   }
 
   // Conversion methods
