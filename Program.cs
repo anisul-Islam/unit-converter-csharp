@@ -14,19 +14,21 @@
     Console.Write($"Please select an option from 1-6: ");
   }
 
-  static bool IsValidOption(string? optionInput, out int option)
+  static bool TryGetOption(out int option)
   {
-    return int.TryParse(optionInput, out option) && option >= 1 && option <= 6;
+    string? input = Console.ReadLine();
+    if (int.TryParse(input, out option) && option >= 1 && option <= 6)
+    {
+      return true;
+    }
+    Console.WriteLine($"Only numeric value is allowed. Please select from option 1-6\n");
+    return false;
   }
 
-  static string GetInputValue()
+  static bool TryGetConversionValue(out double convertedValidValue)
   {
     Console.Write($"Enter the value you want to convert: ");
-    return Console.ReadLine();
-  }
-
-  static bool IsValidInputValue(string? inputValue, out double convertedValidValue)
-  {
+    string? inputValue = Console.ReadLine();
     if (string.IsNullOrWhiteSpace(inputValue))
     {
       Console.WriteLine($"Input can not be empty. Please enter a valid numeric value");
@@ -34,8 +36,7 @@
       return false;
     }
 
-    bool isValidValue = double.TryParse(inputValue, out convertedValidValue);
-    if (!isValidValue || convertedValidValue < 0)
+    if (!double.TryParse(inputValue, out convertedValidValue) || convertedValidValue < 0)
     {
       return false;
     }
@@ -100,23 +101,16 @@
     {
       DisplayMenu();
 
-      string? optionInput = GetInputValue();
-
-      if (!IsValidOption(optionInput, out int option))
+      if (!TryGetOption(out int option))
       {
-        Console.WriteLine($"Only numeric value is allowed. Please select from option 1-6\n");
         continue;
       }
 
-
-      string? inputValue = GetInputValue();
-
-      if (!IsValidInputValue(inputValue, out double convertedValue))
+      if (!TryGetConversionValue(out double convertedValue))
       {
         Console.WriteLine($"Input can not be empty. Please enter a valid numeric value");
         continue;
       }
-
       PerformConversion(option, convertedValue);
       break;
     }
